@@ -21,7 +21,7 @@ type SubmitHandler = (form: CardRequest) => Promise<void>
 type TaskFormProps = {
     initialTitle: string;
     initialSummary: string;
-    initialStatus: string;
+    initialStatus: Status;
     onSubmit: SubmitHandler;
 }
 
@@ -40,7 +40,7 @@ const TaskFormError = () => {
 const TaskForm = ({ initialTitle, initialSummary, initialStatus, onSubmit }: TaskFormProps) => {
     const [titleValue, setTitleValue] = useState(initialTitle)
     const [summaryValue, setSummaryValue] = useState(initialSummary)
-    const [statusValue, setStatusValue] = useState(initialStatus)
+    const [statusValue, setStatusValue] = useState<Status>(initialStatus)
 
     const [hasTitleError, setTitleError] = useState(false)
     const [hasSummaryError, setSummaryError] = useState(false)
@@ -84,7 +84,7 @@ const TaskForm = ({ initialTitle, initialSummary, initialStatus, onSubmit }: Tas
 
     const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const { value } = event.target
-        setStatusValue(value)
+        setStatusValue(value as Status)
     }
 
     return (
@@ -173,7 +173,7 @@ export default function Page() {
     }, [projectId, taskId])
 
     const onSubmit: SubmitHandler = async (form) => {
-        const { error } = await updateCard(Number(projectId), Number(taskId), { ...form, status: task.status })
+        const { error } = await updateCard(Number(projectId), Number(taskId), { ...form })
 
         if (!error) {
             router.push(`/projects/${projectId}`)
@@ -197,7 +197,7 @@ export default function Page() {
                 <TaskForm
                     initialTitle={task.title || ""}
                     initialSummary={task.summary || ""}
-                    initialStatus={task.status || "NEW"}
+                    initialStatus={task.status as Status || "NEW" as Status}
                     onSubmit={onSubmit}
                 />
             </Grid>
