@@ -84,7 +84,7 @@ const TaskForm = ({ initialTitle, initialSummary, initialStatus, onSubmit }: Tas
 
     const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const { value } = event.target
-        setStatusValue(value)
+        setStatusValue(value as Status)
     }
 
     return (
@@ -173,7 +173,7 @@ export default function Page() {
     }, [projectId, taskId])
 
     const onSubmit: SubmitHandler = async (form) => {
-        const { error } = await updateCard(Number(projectId), Number(taskId), { ...form, status: task.status })
+        const { error } = await updateCard(Number(projectId), Number(taskId), { ...form })
 
         if (!error) {
             router.push(`/projects/${projectId}`)

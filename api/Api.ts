@@ -165,7 +165,7 @@ export const createInviteLink = (projectId: number) =>
  */
 export const enterFromInviteLink = (inviteLink: string) =>
     request<ProjectResponse>({
-        path: `/api/v1/projects/${inviteLink}`,
+        path: `/api/v1/projects/invite/${inviteLink}`,
         method: "POST",
     });
 
