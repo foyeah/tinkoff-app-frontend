@@ -24,7 +24,7 @@ import {
     MeResponse
 } from "./dataСontracts";
 
-const baseUrl: string = process.env.SERVER_URL || "https://api.issueify.ru";
+const baseUrl: string = process.env.SERVER_URL || "https://213.171.9.177";
 
 type Method = "GET" | "POST" | "PUT" | "DELETE"
 
