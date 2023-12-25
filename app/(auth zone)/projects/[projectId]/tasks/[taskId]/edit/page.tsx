@@ -8,12 +8,20 @@ import Container from '@mui/material/Container'
 import * as React from 'react'
 import { Grid } from '@mui/material'
 
+enum Status {
+    New = "NEW",
+    InWork = "IN_WORK",
+    Accepted = "ACCEPTED",
+    Dismiss = "DISMISS"
+}
+
 // eslint-disable-next-line no-unused-vars
-type SubmitHandler = (form: Omit<CardRequest, 'status'>) => Promise<void>
+type SubmitHandler = (form: CardRequest) => Promise<void>
 
 type TaskFormProps = {
     initialTitle: string;
     initialSummary: string;
+    initialStatus: string;
     onSubmit: SubmitHandler;
 }
 
@@ -29,10 +37,11 @@ const TaskFormError = () => {
     )
 }
 
-const TaskForm = ({ initialTitle, initialSummary, onSubmit }: TaskFormProps) => {
-
+const TaskForm = ({ initialTitle, initialSummary, initialStatus, onSubmit }: TaskFormProps) => {
     const [titleValue, setTitleValue] = useState(initialTitle)
     const [summaryValue, setSummaryValue] = useState(initialSummary)
+    const [statusValue, setStatusValue] = useState(initialStatus)
+
     const [hasTitleError, setTitleError] = useState(false)
     const [hasSummaryError, setSummaryError] = useState(false)
 
@@ -55,7 +64,8 @@ const TaskForm = ({ initialTitle, initialSummary, onSubmit }: TaskFormProps) => 
         if (isFormValid) {
             onSubmit({
                 title: titleValue,
-                summary: summaryValue
+                summary: summaryValue,
+                status: statusValue as Status
             })
         }
     }
@@ -72,9 +82,29 @@ const TaskForm = ({ initialTitle, initialSummary, onSubmit }: TaskFormProps) => 
         setSummaryError(!validateSummary(value))
     }
 
+    const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const { value } = event.target
+        setStatusValue(value)
+    }
+
     return (
         <div className="w-3/5 py-4 rounded-lg bg-neutral-200 space-y-2 inset-x-0 mb-12">
             <span className="font-bold text-2xl flex justify-center">Редактировать предложение</span>
+            <div className="px-16 flex space-x-4">
+                <label htmlFor="title">Обновите статус</label>
+                <select
+                    name="status"
+                    id="status"
+                    value={statusValue}
+                    className="font-bold flex items-center text-center px-2 rounded-md bg-orange-300 text-sm w-fit"
+                    onChange={handleStatusChange}
+                >
+                    <option value={Status.New}>NEW</option>
+                    <option value={Status.InWork}>IN WORK</option>
+                    <option value={Status.Accepted}>ACCEPTED</option>
+                    <option value={Status.Dismiss}>DISMISS</option>
+                </select>
+            </div>
             <div className="px-16">
                 <label htmlFor="title">Введите название задачи</label>
                 <input
@@ -167,6 +197,7 @@ export default function Page() {
                 <TaskForm
                     initialTitle={task.title || ""}
                     initialSummary={task.summary || ""}
+                    initialStatus={task.status || "NEW"}
                     onSubmit={onSubmit}
                 />
             </Grid>

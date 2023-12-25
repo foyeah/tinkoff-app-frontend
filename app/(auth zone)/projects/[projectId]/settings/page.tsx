@@ -125,10 +125,10 @@ const SettingsForm = ({ inviteLink, projectId, initialTitle, initialVoteCount, i
         <div className="w-3/5 py-4 rounded-lg bg-neutral-200 space-y-2 inset-x-0 mb-12">
             <span className="font-bold text-2xl flex justify-center">Настройки проекта</span>
             <div className="px-16 space-y-1">
-                <label htmlFor="name">Введите новое название проекта</label>
+                <label htmlFor="title">Введите новое название проекта</label>
                 <input
                     type="text"
-                    id="name"
+                    id="title"
                     value={titleValue}
                     required
                     minLength={2}
@@ -141,16 +141,16 @@ const SettingsForm = ({ inviteLink, projectId, initialTitle, initialVoteCount, i
                 ) : null}
             </div>
             <div className="flex px-16 items-center space-x-4">
-                <label htmlFor="add">Добавить участника</label>
+                <label htmlFor="copy">Добавить участника</label>
                 <button
                     className="px-10 border flex justify-center items-center text-align-center gap-2 rounded-lg bg-white duration-300 ease-out hover:bg-neutral-300"
-                    onClick={() => navigator.clipboard.writeText(`https://tinkoff-app-frontend.vercel.app/share/${inviteLink}`)}
+                    onClick={() => navigator.clipboard.writeText(`localhost:3000/share/${inviteLink}`)}
                 >
                     Поделиться ссылкой
                 </button>
             </div>
             <div className="flex px-16 space-x-6">
-                <label htmlFor="add">Доступное количество голосов</label>
+                <label htmlFor="votes">Доступное количество голосов</label>
                 <input
                     type="number"
                     id="votes"
@@ -169,13 +169,14 @@ const SettingsForm = ({ inviteLink, projectId, initialTitle, initialVoteCount, i
                 ) : null}
             </div>
             <div className="flex px-16 space-x-4">
-                <label htmlFor="add">Период обновления голосов (дни)</label>
+                <label htmlFor="period">Период обновления голосов (дни)</label>
                 <input
                     type="number"
-                    id="votes"
+                    id="period"
                     required
                     min={1}
                     max={32}
+                    value={periodValue}
                     className="flex p-2 rounded-[7px]"
                     onChange={(event) => {
                         setPeriodValue(Number(event.target.value))

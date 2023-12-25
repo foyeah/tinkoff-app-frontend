@@ -66,7 +66,7 @@ export default function Page() {
                             required
                             minLength={2}
                             placeholder="Как ни подойдешь на кухню, все время нет печенек, я начинаю грустить и становлюсь злюкой."
-                            className={`h-24 w-full rounded-[7px] px-1 inline-block align-text-top text-ellipsis ${hasError ? 'bg-red-100' : 'bg-white'}`}
+                            className={`h-16 w-full rounded-[7px] px-1 inline-block align-text-top text-ellipsis ${hasError ? 'bg-red-100' : 'bg-white'}`}
                             onChange={(event) => {
                                 setSummaryValues(event.target.value)
                                 setError(false)
