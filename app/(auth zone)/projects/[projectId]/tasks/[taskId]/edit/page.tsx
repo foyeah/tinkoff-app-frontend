@@ -21,7 +21,7 @@ type SubmitHandler = (form: CardRequest) => Promise<void>
 type TaskFormProps = {
     initialTitle: string;
     initialSummary: string;
-    initialStatus: Status;
+    initialStatus: string;
     onSubmit: SubmitHandler;
 }
 
@@ -40,7 +40,7 @@ const TaskFormError = () => {
 const TaskForm = ({ initialTitle, initialSummary, initialStatus, onSubmit }: TaskFormProps) => {
     const [titleValue, setTitleValue] = useState(initialTitle)
     const [summaryValue, setSummaryValue] = useState(initialSummary)
-    const [statusValue, setStatusValue] = useState<Status>(initialStatus)
+    const [statusValue, setStatusValue] = useState(initialStatus)
 
     const [hasTitleError, setTitleError] = useState(false)
     const [hasSummaryError, setSummaryError] = useState(false)
@@ -197,7 +197,7 @@ export default function Page() {
                 <TaskForm
                     initialTitle={task.title || ""}
                     initialSummary={task.summary || ""}
-                    initialStatus={task.status as Status || "NEW" as Status}
+                    initialStatus={task.status || "NEW"}
                     onSubmit={onSubmit}
                 />
             </Grid>
